@@ -400,11 +400,8 @@ export default function TicketDetailPage() {
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-100 text-[10px] font-bold text-indigo-700">
-                            SA
-                          </div>
                           <span className="text-xs font-semibold text-slate-700">
-                            Support Agent
+                            Last Updated
                           </span>
                         </div>
                         <span className="text-[11px] font-medium text-slate-400">

@@ -1,36 +1,248 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Datastraw Support CRM
 
-## Getting Started
+A lightweight Support CRM system built for the Datastraw Technologies internship assessment.
 
-First, run the development server:
+The application allows support teams to create, search, filter, view, and update customer support tickets, including status, priority, and internal notes.
 
-```bash
+Live Demo
+
+Deployed Application:
+https://datastraw-support-crm-beryl.vercel.app/
+
+GitHub Repository:
+https://github.com/usaidgithub/datastraw-support-crm
+
+Features
+Ticket Management
+Create support tickets with:
+Customer name
+Customer email
+Issue title
+Issue description
+Automatically generated ticket IDs such as TKT-001
+Automatic creation and update timestamps
+View complete ticket details
+Update ticket status:
+Open
+In Progress
+Closed
+Add internal notes and comments to tickets
+Search & Filtering
+
+Tickets can be searched across:
+
+Ticket ID
+Customer name
+Customer email
+Issue title
+Issue description
+
+Tickets can also be filtered by status.
+
+Dashboard
+
+The dashboard provides an overview of:
+
+Total tickets
+Open tickets
+In Progress tickets
+Closed tickets
+Recently created tickets
+Standout Feature — Ticket Priority
+
+Each ticket has a priority level:
+
+Low
+Medium
+High
+Urgent
+
+Priority was added because support teams need to distinguish between tickets based not only on their workflow status, but also on how urgently an issue should be handled.
+
+The priority is visible throughout the CRM and can be updated from the ticket detail page.
+
+Responsive UI
+
+The interface is designed to work across:
+
+Desktop
+Tablet
+Mobile
+Tech Stack
+Frontend
+Next.js
+React
+TypeScript
+Tailwind CSS
+Backend
+Next.js Route Handlers
+JavaScript
+Mongoose
+Database
+MongoDB Atlas
+Deployment
+Vercel
+API
+
+The application exposes the following REST APIs.
+
+Create Ticket
+POST /api/tickets
+
+Example request:
+
+{
+  "customer_name": "John Smith",
+  "customer_email": "john@example.com",
+  "subject": "Payment failed",
+  "description": "My payment was deducted but the order was not created."
+}
+
+Example response:
+
+{
+  "ticket_id": "TKT-001",
+  "created_at": "2026-09-16T23:25:02.489Z"
+}
+List Tickets
+GET /api/tickets
+
+Optional query parameters:
+
+?status=Open
+?search=john
+
+They can also be combined:
+
+GET /api/tickets?status=Open&search=john
+
+The search supports ticket ID, customer name, customer email, subject, and description.
+
+Get Ticket
+GET /api/tickets/{ticket_id}
+
+Example:
+
+GET /api/tickets/TKT-001
+
+The response includes the ticket information and associated notes.
+
+Update Ticket
+PUT /api/tickets/{ticket_id}
+
+The endpoint supports updating status, priority, and adding a note.
+
+Example:
+
+{
+  "status": "In Progress",
+  "priority": "High",
+  "note": "Payment issue is being investigated."
+}
+Data Model
+Tickets
+
+The tickets collection contains:
+
+Field	               Description
+ticketId	           Unique ticket identifier
+customerName	       Customer name
+customerEmail	       Customer email
+subject	               Issue title
+description	Issue      description
+status	               Open, In Progress, or Closed
+priority	           Low, Medium, High, or Urgent
+createdAt	           Ticket creation timestamp
+updatedAt	           Last update timestamp
+Notes
+
+The notes collection contains:
+
+Field	    Description
+ticketId	Associated ticket ID
+noteText	Internal note content
+createdAt	Note creation timestamp
+updatedAt	Note update timestamp
+Project Structure
+datastraw/
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── health/
+│   │   │   │   └── route.js
+│   │   │   └── tickets/
+│   │   │       ├── route.js
+│   │   │       └── [ticketId]/
+│   │   │           └── route.js
+│   │   ├── tickets/
+│   │   │   ├── page.tsx
+│   │   │   ├── new/
+│   │   │   │   └── page.tsx
+│   │   │   └── [ticketId]/
+│   │   │       └── page.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   └── layout/
+│   │       ├── AppShell.tsx
+│   │       ├── Navbar.tsx
+│   │       └── Sidebar.tsx
+│   ├── lib/
+│   │   └── mongodb.js
+│   └── models/
+│       ├── Note.js
+│       └── Ticket.js
+├── .env.local
+├── .gitignore
+├── package.json
+└── README.md
+Local Development
+1. Clone the repository
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd datastraw
+2. Install dependencies
+npm install
+3. Configure environment variables
+
+Create a .env.local file in the project root:
+
+MONGODB_URI="your_mongodb_atlas_connection_string"
+4. Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
+5. Create a production build
+npm run build
+Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application is deployed using Vercel.
 
-## Learn More
+The GitHub repository is connected to Vercel, allowing new commits pushed to the main branch to trigger a new deployment.
 
-To learn more about Next.js, take a look at the following resources:
+The MongoDB connection string is configured as a Vercel environment variable and is not committed to the repository.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Validation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application was tested for:
 
-## Deploy on Vercel
+Ticket creation
+Required field validation
+Email validation
+Automatic ticket ID generation
+Ticket listing
+Search
+Status filtering
+Ticket detail retrieval
+Status updates
+Priority updates
+Internal notes
+Combined ticket updates
+Invalid ticket handling
+Responsive UI
+Production deployment
+MongoDB production connectivity
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

@@ -200,7 +200,7 @@ datastraw/
 └── README.md
 Local Development
 1. Clone the repository
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/usaidgithub/datastraw-support-crm
 cd datastraw
 2. Install dependencies
 npm install
